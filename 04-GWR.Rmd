@@ -1,6 +1,6 @@
 # Geographically Weighted Regression {#gwr}
 
-In our last session (boo), we extend the spatial regression approach to explore the concept of spatially varying coefficients. The lecture slides for this practical can be found [here](). A PDF version of the practical can be found [here]().
+In our last session (boo), we extend the spatial regression approach to explore the concept of spatially varying coefficients. The lecture slides for this practical can be found here: [powerpoint](https://github.com/markagreen/spatial_data/blob/main/Lectures/GWR.pptx) or [pdf](https://github.com/markagreen/spatial_data/blob/main/Lectures/GWR.pdf).
 
 ## Loading data
 

@@ -31,6 +31,8 @@ There are a total of eight sessions as part of the spatial data component of the
 
 The materials for the practical sessions are embedded within R notebooks. Notebooks are interactive documents that allow for executionable code to be embedded within for running analyses (and presenting their outputs within the same document). They are helpful for teaching, since you can combine analytical code, the resulting output, and interpretation of what was done in a single file. All of the data and scripts are included within the folder structure, meaning that everything should be fully replicatable. Follow the documents along, reading the guidance and testing parts of the code. Feel free to edit the documents and code as you learn, so that you can have one single resource. 
 
+The easiest way to access all the files to replicate the analyses on your own computer is to download the course zip file from Github [here](https://github.com/markagreen/spatial_data/archive/refs/heads/main.zip). You can load the .Rmd files into RStudio and play around with files directly. If you follow the .Rmd files directly, then you can read through their interpretation and run the code locally too.
+
 Each package we use in the tutorials will need to be pre-installed. To install any package within R, please use `install.packages("")` and specify the package name in-between `""`. Good R practice is to load all dependencies/packages at the start of any script, however for the purpose of these tutorials we will load each as and when we need them so that you can see when and where they are required.
 
 The course materials are all written using the **bookdown** package [@R-bookdown], which was built on top of R Markdown and **knitr** [@xie2015].

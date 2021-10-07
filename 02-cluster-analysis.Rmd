@@ -1,6 +1,6 @@
 # Cluster analysis {#cluster}
 
-In this section, we will introduce how we can analyse spatial data including identifying clustering of data. The lecture slides for this practical can be found [here](). A PDF version of the practical can be found [here](). We define clustering here as where data (locations, or high/low values) are geographically concentrated in particular areas and not evenly spread out.
+In this section, we will introduce how we can analyse spatial data including identifying clustering of data. We define clustering here as where data (locations, or high/low values) are geographically concentrated in particular areas and not evenly spread out. The lecture slides for this practical can be found here: [powerpoint](https://github.com/markagreen/spatial_data/blob/main/Lectures/clustering.pptx) or [pdf](https://github.com/markagreen/spatial_data/blob/main/Lectures/clustering.pdf).
 
 ## Point data
 

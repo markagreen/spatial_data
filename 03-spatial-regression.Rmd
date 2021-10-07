@@ -1,6 +1,6 @@
 # Spatial Regression {#spatreg}
 
-So far we have learned how to visualise spatial data and explore if patterns display clustering of high/low values. However, what if we want to understand the predictors of spatial patterns? In this section, we extend regression techniques to incorporate the spatial structure of data. The lecture slides for this practical can be found [here](). A PDF version of the practical can be found [here]().
+So far we have learned how to visualise spatial data and explore if patterns display clustering of high/low values. However, what if we want to understand the predictors of spatial patterns? In this section, we extend regression techniques to incorporate the spatial structure of data. The lecture slides for this practical can be found here: [powerpoint](https://github.com/markagreen/spatial_data/blob/main/Lectures/Spatial%20Regression.pptx) or [pdf](https://github.com/markagreen/spatial_data/blob/main/Lectures/Spatial%20Regression.pdf).
 
 ## Exploring the data
 
