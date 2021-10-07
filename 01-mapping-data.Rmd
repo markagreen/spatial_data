@@ -1,4 +1,4 @@
-# Mapping data {#intro}
+# Mapping data {#whymap}
 
 In this section, we will introduce how to map and visualise spatial data in R. It will introduce you to the key R packages for wrangling and plotting spatial data, and demonstrate how to use them for different data types. The lecture slides for this practical can be found here: [powerpoint](https://github.com/markagreen/spatial_data/blob/main/Lectures/why_map.pptx) or [pdf](https://github.com/markagreen/spatial_data/blob/main/Lectures/why_map.pdf).
 

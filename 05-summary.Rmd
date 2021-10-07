@@ -8,7 +8,7 @@ Let's review how you have achieved each of the learning outcomes for this sectio
 
 1. Produce static and interactive visualisations of spatial data.
 
-In the [first session](#intro), you learned how to load spatial data into R and map the data using a variety of packages. You produced different types of maps, including how to present them effectively or make maps interactive.
+In the [first session](#whymap), you learned how to load spatial data into R and map the data using a variety of packages. You produced different types of maps, including how to present them effectively or make maps interactive.
 
 2. Identify clustering of point- and area-based data.
 
