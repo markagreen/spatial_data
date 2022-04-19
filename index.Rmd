@@ -40,7 +40,7 @@ The course materials are all written using the **bookdown** package [@R-bookdown
 ## Contact {-}
 
 Dr Mark A. Green \
-Senior Lecturer in Health Geography \
+Reader in Health Geography \
 University of Liverpool \
 <mark.green@liverpool.ac.uk>
 

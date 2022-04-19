@@ -8,7 +8,7 @@ Geography is the lens at which we view the World. Through exploring how health o
 
 ## Mapping in R
 
-There are several R packages that allow us to map and visualise data within R - too many to cover in just one module! Here we will focus on the three main packages for mapping vector data. Raster data are less common in public health, social science and health-related data science (satellite-derived measures, such as green space coverage or sensor estimated pollution, are the exceptions here). As such, we will not cover how to map them here. You can review the lecture slides over these data types [here](). In brief, vector data refer to points, lines or polygons (shapes representing areas)
+There are several R packages that allow us to map and visualise data within R - too many to cover in just one module! Here we will focus on the three main packages for mapping vector data. In brief, vector data refer to points, lines or polygons (shapes representing areas). Raster data are less common in public health, social science and health-related data science (satellite-derived measures, such as green space coverage or sensor estimated pollution, are the exceptions here). As such, we will not cover how to map them here. 
 
 First, we have `sf` (Simple Features) which provides allows R to engage with spatial data and therefore is key for any wrangling of spatial data we need to do. Through base R's `plot()` command, we can map data. We need `sf` for most spatial packages or commands, so it is core here. I find `plot()` somewhat restrictive in designing pretty or engaging visualisations. It is quick to run and requires minimal code, so often offers a 'first pass' at looking at the data
 
@@ -66,7 +66,7 @@ Mapping the MSOAs themselves is a little boring, so let's join on some data. We 
 We will now load in the data and join it onto the shapefile. To do the latter step, we will need to join on a common identifier - in this case MSOA code as it is unique and allows us to assign a one-to-one match between datasets. The `merge` command can join together files, as long as we tell R on what files to join based on (i.e., which columns are the MSOA codes found).
 
 ```{r}
-vaccine_uptake <- read.csv("./Data/msoa_vaccine_10June21.csv") # Load in vaccine uptake data
+vaccine_uptake <- read.csv("./Data/msoa_vaccine_10June21.csv", fileEncoding = "UTF-8-BOM") # Load in vaccine uptake data
 msoas <- merge(msoas, vaccine_uptake, by.x = "code", by.y = "msoa_code", all.x = TRUE) # Merge the vaccine uptake objects onto the msoa object, based on the columns defined (x = msoas, y = vaccine_uptake), and do this for all observations only in the x (msoas) object
   
 ```

@@ -49,12 +49,13 @@ map1 # Print plot
 
 ```
 
-Hmmmm, you may see there is an issue with interpretating this plot - many of the plots overlap each other making it difficult to determine underlying patterns. We therefore need a way of summarising this information. 
+Hmmmm, you may see there is an issue with interpreting this plot - many of the plots overlap each other making it difficult to determine underlying patterns. We therefore need a way of summarising this information. 
 
 Histograms are useful plots for examining the distribution of single variables - we can apply them spatially by creating **spatial histograms**. To do this, we need to create spatial **bins** and then count how many points are in each of those bins. We use this binning approach when producing histograms for single variables (e.g., counting how many points exist at each value of a variable) and just extend it here for each x,y position on a map. I recommend using a **hex** approach, since hexagons can minimise visual artefacts that can be created through other shapes.  
 
 ```{r}
 library(viridis) # Load package
+# install.packages("hexbin") # Need to have installed, but don't have to call it in here
 map2 <- ggplot() + # Call ggplot2
   geom_sf(data = liverpool) + # Load liverpool outline
   geom_hex(data = food_outlets, aes(x = Geocode.Longitude, y = Geocode.Latitude)) + # Define data to be plotted
@@ -112,7 +113,7 @@ Let's load in these data.
 
 ```{r}
 # Load data
-gp_locations <- read.csv("./Data/gp_qof_1920.csv")
+gp_locations <- read.csv("./Data/gp_qof_1920.csv", fileEncoding = "UTF-8-BOM")
 
 # Convert to spatial points data frame
 gp_locations_sp <- gp_locations %>% # For object
@@ -318,8 +319,10 @@ map8 # Plot
 The map tells us how different each area is to it's surrounding areas , with areas with higher z-scores representing areas that are clustered by higher values in the surrounding areas, and lower scores the opposite (surrounded by lower values). The map suggests a cluster in the city centre area, as well as a less distinct one to the South East. To understand how meaningful these spatial patterns are, we can plot the p-values for areas.
 
 ```{r}
+# Depending on how R handles non-alphanumeric characters in your computer, you might need to edit the fill value - I have included the two most common ways it has worked on my machines but you might need to check for the exact name of the p-value (you can re-run and move the hashtag around based on what works)
 map9 <- ggplot() +
-  geom_sf(data = local_2nd_map, aes(fill = Pr.z...0.)) + # Plot local Moran's I statistic (z score)
+  # geom_sf(data = local_2nd_map, aes(fill = Pr.z...0.)) + # Plot local Moran's I statistic (z score)
+  geom_sf(data = local_2nd_map, aes(fill = Pr.z....E.Ii..)) + # Plot local Moran's I statistic (z score)
   scale_fill_viridis() + # Make colour blind friendly
   xlab("Longitude") + # Add x-axis label
   ylab("Latitude") + # Add y-axis label
