@@ -25,6 +25,11 @@ lad_eng$percent_second_dose <- (lad_eng$total_second_dose / lad_eng$population) 
 # Remove objects to save space
 rm(lad_uk, lad_data) 
 
+# # In here I have defined latitude and longitude for the centroid, you may need to define this yourself as GWR will usually ask for points. To do this, use the following code:
+# hold <- st_centroid(lad_eng) # Define centroid of areas and revise geometry (suggest save as seperate object)
+# lad_eng$latitude <- st_coordinates(hold$geometry)[,1] # Extract latitude from geometry
+# lad_eng$longitude <- st_coordinates(hold$geometry)[,2] # Get longitude
+
 ```
 
 Let's have a look at the spatial pattern of the variable. 
