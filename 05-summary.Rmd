@@ -36,6 +36,6 @@ The methods we have covered so far will have given you a good grounding in spati
 I would just like to end by thanking you for taking the time to read through these materials and hopefully you have enjoyed learning about spatial data analysis. If you have any further questions, please do not hesitate to get in contact.
 
 Dr Mark A. Green \
-Senior Lecturer in Health Geography \
+Reader in Health Geography \
 University of Liverpool \
 <mark.green@liverpool.ac.uk>
