@@ -122,11 +122,10 @@ map1_2 # Print
 Just as easy to use! Again, let's make the map prettier. We can also add in a few other common map conventions including a north arrow and a scale bar far easier with tmap. Note: calling viridis here can be a bit temperamental, and may need you to reload the package before running the code.
 
 ```{r}
-map1_2 <- tm_shape(msoas) + # Call which spatial object
-          tm_polygons("total_second_dose", palette = "viridis", title = "Frequency") + # Which column to plot and plot using colour blind friendly colours and edit legend to 'Frequency'
-          tm_layout(main.title = "Second dose uptake") + # Add title
-          tm_scale_bar(position = c("right", "top"), width = 0.15) + # Add scale bar
-          tm_compass(position = c("left", "top"), size = 2) # Add north arrow
+map1_2 <- tm_shape(msoas) + # Call area data object
+    tm_polygons("total_second_dose", fill.scale = tm_scale(values = "viridis"), fill.legend = tm_legend(title = "Frequency")) + # Which column to plot and plot using colour blind friendly colours and edit legend to 'Frequency'
+    tm_title("Second dose uptake") + # Adds title
+    tm_scalebar(position = c("right", "bottom")) # Add scale bar
 map1_2 # Print
   
 ```
@@ -207,12 +206,11 @@ We can do the same using `tmap` too. We next recreate the same map from earlier 
 
 ```{r}
 map1_4 <- tm_shape(msoas) + # Call area data object
-          tm_polygons("total_second_dose", palette = "viridis", title = "Frequency") + # Which column to plot and plot using colour blind friendly colours and edit legend to 'Frequency'
+          tm_polygons("total_second_dose", fill.scale = tm_scale(values = "viridis"), fill.legend = tm_legend(title = "Frequency")) + # Which column to plot and plot using colour blind friendly colours and edit legend to 'Frequency'
         tm_shape(bus_locations_sp) + # Call spatial points
-          tm_dots(size = 0.5) + # Plot points (cal call specific variable here too)
-        tm_layout(main.title = "Second dose uptake") + # Add title
-        tm_scale_bar(position = c("right", "top"), width = 0.15) + # Add scale bar
-        tm_compass(position = c("left", "top"), size = 2) # Add north arrow
+        tm_dots(size = 0.5) + # Plot points (cal call specific variable here too)
+        tm_title("Second dose uptake") + # Adds titlee
+        tm_scalebar(position = c("right", "bottom")) # Add scale bar
 map1_4 # Print
 
 ```
@@ -244,68 +242,6 @@ We can also save these interactive maps as standalone html files that can be sha
 tmap_save(map1_4, filename = "./Plots/vaccine_bus_interactive.html") # Save
 
 ```
-
-We can edit the basemaps presented here to a range of options. A couple of my favourites include:
-
-* Carto as basemap for tiles, rather than default of ESRI
-* Stamen which is just pretty
-* OpenStreetMap is always worth a shout
-
-Below is some code to try these styles, but you can inspect the range of designs and options [here](https://leaflet-extras.github.io/leaflet-providers/preview/) 
-
-```{r}
-# # Carto - light
-# tm_basemap(leaflet::providers$CartoDB.PositronNoLabels, group = "CartoDB basemap") + # Plot Carto basemap
-#     tm_shape(msoas) + # Select MSOA object
-#     tm_polygons("total_second_dose", palette = "RdYlBu") + # Plot vaccine uptake (2nd dose)
-#     tm_tiles(leaflet::providers$CartoDB.PositronOnlyLabels, group = "CartoDB labels") # Plot place name labels
-
-# # Carto - dark
-# tm_basemap(leaflet::providers$CartoDB.DarkMatter) + # Plot Carto basemap
-#     tm_shape(msoas) + # Select MSOA object
-#     tm_polygons("total_second_dose", palette = "RdYlBu")
-
-# # Stamen
-# tm_basemap("Stamen.Watercolor") + # Add Stamen as basemap
-#     tm_shape(msoas) + # Select MSOA object
-#     tm_polygons("total_second_dose", palette = "RdYlBu") + # Plot vaccine uptake (2nd dose)
-#     tm_tiles("Stamen.TonerLabels") # Adds labels for areas (e.g., place names)
-
-# # OpenStreetMap
-# tm_basemap("OpenStreetMap.HOT") + # Plot basemap
-#     tm_shape(msoas) + # Select MSOA object
-#     tm_polygons("total_second_dose", palette = "RdYlBu")
-
-```
-
-The eagled-eye of you may have noticed that this technology is enabled through something called `leaflet`. We can actually create interactive maps using `leaflet` directly, which gives greater flexibility and control (even if the code is longer and more difficult). Let's give it a go!
-
-```{r}
-# Load package
-library(leaflet)
-
-# Transform the CRS to match WGS84 format for leaflet
-msoas <- st_transform(msoas, 4326)
-
-# Define parameters for colours for mapping
-pal <- colorNumeric(viridis_pal(option = "viridis")(2), domain = c(0, 5000)) # Set doman as min/max
-
-# Plot
-leaflet() %>%
-  # Add area data on vaccine uptake populations
-  addPolygons(data = msoas, # Define data
-              fillColor = ~pal(total_second_dose), # Specify the variable to be plotted, with pal representing the colours to plot
-              weight = 0, # Define how thick the lines will be 
-              opacity = 0, # How see through we want the lines to be (0%)
-              fillOpacity = 0.5) %>% # How see through we want areas coloured in to be (50%)
-  # Add bus locations in
-  addCircleMarkers(data = bus_locations_sp, # Define data
-                   radius = 1, # Only plot immediate location
-                   color = "red") %>% # Select colour to plot
-  addProviderTiles("CartoDB.Positron") # Define base map, here as Carto
-
-```
-
 ## Summary
 
 Well done! You have learned how to visualise spatial data, make professionally looking maps, and think about how to effectively present information in static and interactive ways. In the next section, we will consider how to apply this spatial way of presenting data into more formal approaches of analysis. 

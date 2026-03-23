@@ -13,7 +13,7 @@ link-citations: yes
 
 The resource here is part of the University of Liverpool module:
 
-DASC507 – Advanced Biostatistics II: Analysis Methods for Complex Data Structures
+DASC507 – High-dimensional Data Structures and Learning Algorithms
 
 Specifically, the resources contained here are for the 'Spatial Data' part of the module. In the following four sessions we will explain how to deal with spatial data, visualise them, and introduce some techniques for analysising spatial data.
 
@@ -25,11 +25,11 @@ Specifically, the resources contained here are for the 'Spatial Data' part of th
 
 ## Teaching structure {-}
 
-There are a total of eight sessions as part of the spatial data component of the module. This contains four lectures, which will be short talks introducing concepts and applications within each technique, and four supplementary practicals that will cover how to implement the same techniques within R. The resources here cover the practical sessions, although links to the lecture slides are also provided at the relevant places.
+There are a total of four sessions as part of the spatial data component of the module. There are four one-hour lectures, which will be short talks introducing concepts and applications within each technique, and four one-hour practicals that will cover how to implement the same techniques within R. The resources here cover the practical sessions, although links to the lecture slides are also provided at the relevant places.
 
 ## Computational notebooks {-}
 
-The materials for the practical sessions are embedded within R notebooks. Notebooks are interactive documents that allow for executionable code to be embedded within for running analyses (and presenting their outputs within the same document). They are helpful for teaching, since you can combine analytical code, the resulting output, and interpretation of what was done in a single file. All of the data and scripts are included within the folder structure, meaning that everything should be fully replicatable. Follow the documents along, reading the guidance and testing parts of the code. Feel free to edit the documents and code as you learn, so that you can have one single resource. 
+The materials for the practical sessions are embedded within R notebooks. Notebooks are interactive documents that allow for executable code to be embedded within for running analyses (and presenting their outputs within the same document). They are helpful for teaching, since you can combine analytical code, the resulting output, and interpretation of what was done in a single file. All of the data and scripts are included within the folder structure, meaning that everything should be fully reproduceable. Follow the documents along, reading the guidance and testing parts of the code. Feel free to edit the documents and code as you learn, so that you can have one single resource. 
 
 The easiest way to access all the files to replicate the analyses on your own computer is to download the course zip file from Github [here](https://github.com/markagreen/spatial_data/archive/refs/heads/main.zip). You can load the .Rmd files into RStudio and play around with files directly. If you follow the .Rmd files directly, then you can read through their interpretation and run the code locally too.
 
@@ -39,8 +39,8 @@ The course materials are all written using the **bookdown** package [@R-bookdown
 
 ## Contact {-}
 
-Dr Mark A. Green \
-Reader in Health Geography \
+Professor Mark A. Green \
+Professor of Health Geography \
 University of Liverpool \
 <mark.green@liverpool.ac.uk>
 

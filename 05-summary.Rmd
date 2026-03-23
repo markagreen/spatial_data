@@ -18,6 +18,80 @@ Our [second session](#cluster) looked at how we might try to identify spatial cl
 
 The final learning outcome was achieved through two sessions. First, we extended OLS regression approaches using spatially lagged variables or accounted for the spatial structure of error terms to accommodate [spatial regression techniques](#spatreg). Second, we extended OLS regression approaches to incorporate spatially varying coefficients through [Geographically Weighted Regression](#gwr).
 
+## Assignment
+
+Assignment 2 involves students selecting two of three topics. They must write a short report that presents a data analysis of each topic. We suggest 1500 words per topic. Figure captions and tables do not count towards the word count.
+
+Students can select the spatial data section of the module for the assignment (topic 3 here). The spatial data task is: Using the `spatial_analysis_assignment2.csv` file (shapefile for Local Authorities is provided in `shapefile_LADs.zip`), please answer the following research question: What spatial factors influence premature cardiovascular mortality rates? In the analysis, you should do the following steps:
+
+1.	Provide descriptive statistics for your chosen outcome variable and predictors
+2.	Present a map of the geographical distribution of your outcome variable 
+3.	Investigate the extent of spatial clustering in your outcome variable
+4.	Using a chosen spatial regression method (please justify which), investigate which factors are associated to your outcome
+5.	Provide interpretation and discussion of what your findings mean
+
+The data can be found within the files on this tutorial (they are also available on Canvas for DASC507 students). To load the data, students should do the following:
+
+```{r}
+data <- read.csv("./Data/spatial_analysis_assignment2.csv") # Load dataset (if downloading the data from Canvas, the path will need updating)
+
+```
+
+The file contains a series of measures for all local authorities in England. It is currently in long format. It will be easier to manipulate in wide format.
+
+```{r}
+library(reshape2) # Load relevant package
+data_persons <- data[data$Sex == "Persons" | data$Sex == "Not applicable", ] # Keep only 'Persons' or NA (can adapt this if want to do sex-specific outcomes but optional for assignment)
+data_wide <- dcast(data_persons, Area.Code + Area.Name + Area.Type ~ Indicator.Name, value.var = "Value") # Reshape to wide format: one column per indicator
+
+```
+
+You will then need to join this onto the relevant shapefile.
+
+```{r}
+library(sf) # Load relevant package
+shapefiles <- read_sf("./Shapefiles/shapefile_LADs/england_lad_2011_gen_clipped.shp") # Load shapefile
+combined <- merge(shapefiles, data_wide, by.x = "code", by.y = "Area.Code", all.x = TRUE) # Join together
+
+```
+
+The file has some missing data in it, which follows the data source we acquired the data from. For simplicity in the assignment, we suggest that we just impute the mean value for those missing areas. This is a bit easier than dropping areas as that can cause difficulties when running spatial analyses as some areas might not have neighbours. To help you do this, I have written this piece of code that adds the mean value for a column if a row has a missing value.
+
+```{r}
+numeric_cols <- sapply(combined, is.numeric) # Identify numeric columns
+
+for (col in names(combined)[numeric_cols]) {
+  combined[[col]][is.na(combined[[col]])] <- mean(combined[[col]], na.rm = TRUE) # Replace NAs with column means
+}
+
+# summary(combined) # Check worked
+
+```
+
+The only other problem that you will encounter is dealing with islands, since they will have no neighbours. To solve this, you would have to manually assign who they neighbour. For the assignment, we recommend that you just remove them for simplicity. 
+
+```{r}
+combined_subset <- subset(combined, !(Area.Name %in% c("Isle of Wight", "Isles of Scilly"))) # Remove islands
+
+```
+
+The rest of the analyses are up to you to decide on. Follow each of the five steps from earlier. Explain any methodological decisions clearly and justify them. Explain the results and what they show, making reference to how they might compare to other studies. `Under 75 mortality rate from all cardiovascular diseases` (measured as per 100,000 people) should be your outcome. You should then decide which of the following might be your explanatory variables:
+
+*	Fuel poverty (low income, high cost methodology) (percentage of people living in fuel poverty, %)
+*	Unemployment (model-based) (percentage of people unemployed, %)
+*	Long term claimants of Jobseeker's Allowances (percentage of people receiving this welfare, %) 
+*	Air pollution: fine particulate matter (PM10 levels per unit)
+*	Average weekly earnings (£ per week per person)
+*	Number of premises licensed to sell alcohol (a count per square kilometer)
+*	The rate of complaints about noise (per 1000 people)
+*	Percentage of adults cycling for travel at least three days per week (%)
+* Percentage of adults walking for travel at least three days per week (%)
+* Affordability of home ownership (ratio of median house price to median gross annual residence-based earnings)
+
+Areas are then described using `code` (unique identifier for a local authority), `name` or `Area.Name` (both the name of the local authority), `altname` (alternative names) and `Area.Type` (denotes that is a local authority).
+
+Best of luck wth your assignment. 
+
 ## Further learning
 
 The methods we have covered so far will have given you a good grounding in spatial methods, however they are just a small flavour of the vast range of opportunities thinking spatially can bring to research. Here are a few other areas or methods you can read up on in case you want to take things forward. For each, I have provided a (open access) research example of its application and some example R code/packages for you to see how it can be done.

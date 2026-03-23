@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Summary | Analysis Methods for Complex Data Structures: Spatial Data</title>
   <meta name="description" content="Chapter 5 Summary | Analysis Methods for Complex Data Structures: Spatial Data" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Summary | Analysis Methods for Complex Data Structures: Spatial Data" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Mark Green" />
 
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2026-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="gwr.html"/>
 <link rel="next" href="references.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,12 +49,114 @@
 
 
 
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
-
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -80,16 +181,16 @@
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#computational-notebooks"><i class="fa fa-check"></i>Computational notebooks</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#contact"><i class="fa fa-check"></i>Contact</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Mapping data</a>
+<li class="chapter" data-level="1" data-path="whymap.html"><a href="whymap.html"><i class="fa fa-check"></i><b>1</b> Mapping data</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#why-map"><i class="fa fa-check"></i><b>1.1</b> Why map?</a></li>
-<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#mapping-in-r"><i class="fa fa-check"></i><b>1.2</b> Mapping in R</a>
+<li class="chapter" data-level="1.1" data-path="whymap.html"><a href="whymap.html#why-map"><i class="fa fa-check"></i><b>1.1</b> Why map?</a></li>
+<li class="chapter" data-level="1.2" data-path="whymap.html"><a href="whymap.html#mapping-in-r"><i class="fa fa-check"></i><b>1.2</b> Mapping in R</a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="intro.html"><a href="intro.html#areas"><i class="fa fa-check"></i><b>1.2.1</b> Areas</a></li>
-<li class="chapter" data-level="1.2.2" data-path="intro.html"><a href="intro.html#points"><i class="fa fa-check"></i><b>1.2.2</b> Points</a></li>
+<li class="chapter" data-level="1.2.1" data-path="whymap.html"><a href="whymap.html#areas"><i class="fa fa-check"></i><b>1.2.1</b> Areas</a></li>
+<li class="chapter" data-level="1.2.2" data-path="whymap.html"><a href="whymap.html#points"><i class="fa fa-check"></i><b>1.2.2</b> Points</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#interactive-maps"><i class="fa fa-check"></i><b>1.3</b> Interactive maps</a></li>
-<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#summary"><i class="fa fa-check"></i><b>1.4</b> Summary</a></li>
+<li class="chapter" data-level="1.3" data-path="whymap.html"><a href="whymap.html#interactive-maps"><i class="fa fa-check"></i><b>1.3</b> Interactive maps</a></li>
+<li class="chapter" data-level="1.4" data-path="whymap.html"><a href="whymap.html#summary"><i class="fa fa-check"></i><b>1.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="cluster.html"><a href="cluster.html"><i class="fa fa-check"></i><b>2</b> Cluster analysis</a>
 <ul>
@@ -97,7 +198,6 @@
 <ul>
 <li class="chapter" data-level="2.1.1" data-path="cluster.html"><a href="cluster.html#spatial-histograms"><i class="fa fa-check"></i><b>2.1.1</b> Spatial histograms</a></li>
 <li class="chapter" data-level="2.1.2" data-path="cluster.html"><a href="cluster.html#kernal-density-estimation"><i class="fa fa-check"></i><b>2.1.2</b> Kernal Density Estimation</a></li>
-<li class="chapter" data-level="2.1.3" data-path="cluster.html"><a href="cluster.html#spatial-interpolation"><i class="fa fa-check"></i><b>2.1.3</b> Spatial interpolation</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="cluster.html"><a href="cluster.html#area-data"><i class="fa fa-check"></i><b>2.2</b> Area data</a>
 <ul>
@@ -132,16 +232,15 @@
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="gwr.html"><a href="gwr.html#assessing-model-fit"><i class="fa fa-check"></i><b>4.3.1</b> Assessing model fit</a></li>
 <li class="chapter" data-level="4.3.2" data-path="gwr.html"><a href="gwr.html#plotting-coefficients"><i class="fa fa-check"></i><b>4.3.2</b> Plotting coefficients</a></li>
-<li class="chapter" data-level="4.3.3" data-path="gwr.html"><a href="gwr.html#assessing-statistical-significance-of-coefficients"><i class="fa fa-check"></i><b>4.3.3</b> Assessing statistical significance of coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="gwr.html"><a href="gwr.html#scaling-gwr-for-large-datasets"><i class="fa fa-check"></i><b>4.4</b> Scaling GWR for large datasets</a></li>
-<li class="chapter" data-level="4.5" data-path="gwr.html"><a href="gwr.html#summary-3"><i class="fa fa-check"></i><b>4.5</b> Summary</a></li>
+<li class="chapter" data-level="4.4" data-path="gwr.html"><a href="gwr.html#summary-3"><i class="fa fa-check"></i><b>4.4</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="intro.html"><a href="intro.html#summary"><i class="fa fa-check"></i><b>5</b> Summary</a>
+<li class="chapter" data-level="5" data-path="whymap.html"><a href="whymap.html#summary"><i class="fa fa-check"></i><b>5</b> Summary</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>5.1</b> Learning outcomes</a></li>
-<li class="chapter" data-level="5.2" data-path="summary.html"><a href="summary.html#further-learning"><i class="fa fa-check"></i><b>5.2</b> Further learning</a></li>
-<li class="chapter" data-level="5.3" data-path="summary.html"><a href="summary.html#thank-you"><i class="fa fa-check"></i><b>5.3</b> Thank you</a></li>
+<li class="chapter" data-level="5.2" data-path="summary.html"><a href="summary.html#assignment"><i class="fa fa-check"></i><b>5.2</b> Assignment</a></li>
+<li class="chapter" data-level="5.3" data-path="summary.html"><a href="summary.html#further-learning"><i class="fa fa-check"></i><b>5.3</b> Further learning</a></li>
+<li class="chapter" data-level="5.4" data-path="summary.html"><a href="summary.html#thank-you"><i class="fa fa-check"></i><b>5.4</b> Thank you</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -164,16 +263,16 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="summary" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Summary</h1>
+<div id="summary" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Summary<a href="whymap.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Well done on making it to the end! Before we sign off, it is a good time to reflect over everything you have achieved over the past few weeks.</p>
-<div id="learning-outcomes-1" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Learning outcomes</h2>
+<div id="learning-outcomes-1" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Learning outcomes<a href="summary.html#learning-outcomes-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s review how you have achieved each of the learning outcomes for this section of the module.</p>
 <ol style="list-style-type: decimal">
 <li>Produce static and interactive visualisations of spatial data.</li>
 </ol>
-<p>In the <a href="intro.html#intro">first session</a>, you learned how to load spatial data into R and map the data using a variety of packages. You produced different types of maps, including how to present them effectively or make maps interactive.</p>
+<p>In the <a href="whymap.html#whymap">first session</a>, you learned how to load spatial data into R and map the data using a variety of packages. You produced different types of maps, including how to present them effectively or make maps interactive.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Identify clustering of point- and area-based data.</li>
 </ol>
@@ -183,8 +282,55 @@
 </ol>
 <p>The final learning outcome was achieved through two sessions. First, we extended OLS regression approaches using spatially lagged variables or accounted for the spatial structure of error terms to accommodate <a href="spatreg.html#spatreg">spatial regression techniques</a>. Second, we extended OLS regression approaches to incorporate spatially varying coefficients through <a href="gwr.html#gwr">Geographically Weighted Regression</a>.</p>
 </div>
-<div id="further-learning" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Further learning</h2>
+<div id="assignment" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Assignment<a href="summary.html#assignment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Assignment 2 involves students selecting two of three topics. They must write a short report that presents a data analysis of each topic. We suggest 1500 words per topic. Figure captions and tables do not count towards the word count.</p>
+<p>Students can select the spatial data section of the module for the assignment (topic 3 here). The spatial data task is: Using the <code>spatial_analysis_assignment2.csv</code> file (shapefile for Local Authorities is provided in <code>shapefile_LADs.zip</code>), please answer the following research question: What spatial factors influence premature cardiovascular mortality rates? In the analysis, you should do the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Provide descriptive statistics for your chosen outcome variable and predictors</li>
+<li>Present a map of the geographical distribution of your outcome variable</li>
+<li>Investigate the extent of spatial clustering in your outcome variable</li>
+<li>Using a chosen spatial regression method (please justify which), investigate which factors are associated to your outcome</li>
+<li>Provide interpretation and discussion of what your findings mean</li>
+</ol>
+<p>The data can be found within the files on this tutorial (they are also available on Canvas for DASC507 students). To load the data, students should do the following:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="summary.html#cb129-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;./Data/spatial_analysis_assignment2.csv&quot;</span>) <span class="co"># Load dataset (if downloading the data from Canvas, the path will need updating)</span></span></code></pre></div>
+<p>The file contains a series of measures for all local authorities in England. It is currently in long format. It will be easier to manipulate in wide format.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="summary.html#cb130-1" tabindex="-1"></a><span class="fu">library</span>(reshape2) <span class="co"># Load relevant package</span></span>
+<span id="cb130-2"><a href="summary.html#cb130-2" tabindex="-1"></a>data_persons <span class="ot">&lt;-</span> data[data<span class="sc">$</span>Sex <span class="sc">==</span> <span class="st">&quot;Persons&quot;</span> <span class="sc">|</span> data<span class="sc">$</span>Sex <span class="sc">==</span> <span class="st">&quot;Not applicable&quot;</span>, ] <span class="co"># Keep only &#39;Persons&#39; or NA (can adapt this if want to do sex-specific outcomes but optional for assignment)</span></span>
+<span id="cb130-3"><a href="summary.html#cb130-3" tabindex="-1"></a>data_wide <span class="ot">&lt;-</span> <span class="fu">dcast</span>(data_persons, Area.Code <span class="sc">+</span> Area.Name <span class="sc">+</span> Area.Type <span class="sc">~</span> Indicator.Name, <span class="at">value.var =</span> <span class="st">&quot;Value&quot;</span>) <span class="co"># Reshape to wide format: one column per indicator</span></span></code></pre></div>
+<p>You will then need to join this onto the relevant shapefile.</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="summary.html#cb131-1" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co"># Load relevant package</span></span>
+<span id="cb131-2"><a href="summary.html#cb131-2" tabindex="-1"></a>shapefiles <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;./Shapefiles/shapefile_LADs/england_lad_2011_gen_clipped.shp&quot;</span>) <span class="co"># Load shapefile</span></span>
+<span id="cb131-3"><a href="summary.html#cb131-3" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">merge</span>(shapefiles, data_wide, <span class="at">by.x =</span> <span class="st">&quot;code&quot;</span>, <span class="at">by.y =</span> <span class="st">&quot;Area.Code&quot;</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="co"># Join together</span></span></code></pre></div>
+<p>The file has some missing data in it, which follows the data source we acquired the data from. For simplicity in the assignment, we suggest that we just impute the mean value for those missing areas. This is a bit easier than dropping areas as that can cause difficulties when running spatial analyses as some areas might not have neighbours. To help you do this, I have written this piece of code that adds the mean value for a column if a row has a missing value.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="summary.html#cb132-1" tabindex="-1"></a>numeric_cols <span class="ot">&lt;-</span> <span class="fu">sapply</span>(combined, is.numeric) <span class="co"># Identify numeric columns</span></span>
+<span id="cb132-2"><a href="summary.html#cb132-2" tabindex="-1"></a></span>
+<span id="cb132-3"><a href="summary.html#cb132-3" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> <span class="fu">names</span>(combined)[numeric_cols]) {</span>
+<span id="cb132-4"><a href="summary.html#cb132-4" tabindex="-1"></a>  combined[[col]][<span class="fu">is.na</span>(combined[[col]])] <span class="ot">&lt;-</span> <span class="fu">mean</span>(combined[[col]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># Replace NAs with column means</span></span>
+<span id="cb132-5"><a href="summary.html#cb132-5" tabindex="-1"></a>}</span>
+<span id="cb132-6"><a href="summary.html#cb132-6" tabindex="-1"></a></span>
+<span id="cb132-7"><a href="summary.html#cb132-7" tabindex="-1"></a><span class="co"># summary(combined) # Check worked</span></span></code></pre></div>
+<p>The only other problem that you will encounter is dealing with islands, since they will have no neighbours. To solve this, you would have to manually assign who they neighbour. For the assignment, we recommend that you just remove them for simplicity.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="summary.html#cb133-1" tabindex="-1"></a>combined_subset <span class="ot">&lt;-</span> <span class="fu">subset</span>(combined, <span class="sc">!</span>(Area.Name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Isle of Wight&quot;</span>, <span class="st">&quot;Isles of Scilly&quot;</span>))) <span class="co"># Remove islands</span></span></code></pre></div>
+<p>The rest of the analyses are up to you to decide on. Follow each of the five steps from earlier. Explain any methodological decisions clearly and justify them. Explain the results and what they show, making reference to how they might compare to other studies. <code>Under 75 mortality rate from all cardiovascular diseases</code> (measured as per 100,000 people) should be your outcome. You should then decide which of the following might be your explanatory variables:</p>
+<ul>
+<li>Fuel poverty (low income, high cost methodology) (percentage of people living in fuel poverty, %)</li>
+<li>Unemployment (model-based) (percentage of people unemployed, %)</li>
+<li>Long term claimants of Jobseeker’s Allowances (percentage of people receiving this welfare, %)</li>
+<li>Air pollution: fine particulate matter (PM10 levels per unit)</li>
+<li>Average weekly earnings (£ per week per person)</li>
+<li>Number of premises licensed to sell alcohol (a count per square kilometer)</li>
+<li>The rate of complaints about noise (per 1000 people)</li>
+<li>Percentage of adults cycling for travel at least three days per week (%)</li>
+<li>Percentage of adults walking for travel at least three days per week (%)</li>
+<li>Affordability of home ownership (ratio of median house price to median gross annual residence-based earnings)</li>
+</ul>
+<p>Areas are then described using <code>code</code> (unique identifier for a local authority), <code>name</code> or <code>Area.Name</code> (both the name of the local authority), <code>altname</code> (alternative names) and <code>Area.Type</code> (denotes that is a local authority).</p>
+<p>Best of luck wth your assignment.</p>
+</div>
+<div id="further-learning" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Further learning<a href="summary.html#further-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The methods we have covered so far will have given you a good grounding in spatial methods, however they are just a small flavour of the vast range of opportunities thinking spatially can bring to research. Here are a few other areas or methods you can read up on in case you want to take things forward. For each, I have provided a (open access) research example of its application and some example R code/packages for you to see how it can be done.</p>
 <ul>
 <li><strong>Cartograms</strong> -&gt; <em>Description:</em> Maps can lie. They can distort patterns, resulting in the misleading interpretation of data. One distortion comes from the geographical size of zones. Where zones are small they can be hard to see, and hence larger areas may attract your attention. You may have noticed this in the <a href="spatreg.html#spatreg">spatial regression session</a> when some cities were difficult to see on the maps. Cartograms (including linked methods for distorting area sizes such as hexmaps) offer one way of minimising this bias, through readjusting the geographical sizes of areas based on their underlying population sizes. This can allow for fairer comparisons, especially when mapping <em>people</em> rather than <em>places</em>. <em>Research example:</em> <a href="https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0040001">Worldmapper: The Human Anatomy of a Small Planet</a>. <em>R example:</em> <a href="https://r-charts.com/spatial/cartogram-ggplot2/">Tutorial using ggplot2</a>.</li>
@@ -197,11 +343,11 @@
 <li><strong>Spatial machine learning</strong> -&gt; <em>Description:</em> A relatively newer area of research explores how we can extend machine learning methods to explicitly incorporate space into them. This field is so new that I have very little to report here! <em>Research example:</em> <a href="https://www.nature.com/articles/s41598-020-79148-7">Spatio-temporal predictions using deep learning</a>. <em>R example:</em> <a href="https://geocompr.robinlovelace.net/spatial-cv.html">Statistical Learning tutorial</a>.</li>
 </ul>
 </div>
-<div id="thank-you" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Thank you</h2>
+<div id="thank-you" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Thank you<a href="summary.html#thank-you" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>I would just like to end by thanking you for taking the time to read through these materials and hopefully you have enjoyed learning about spatial data analysis. If you have any further questions, please do not hesitate to get in contact.</p>
 <p>Dr Mark A. Green<br />
-Senior Lecturer in Health Geography<br />
+Reader in Health Geography<br />
 University of Liverpool<br />
 <a href="mailto:mark.green@liverpool.ac.uk" class="email">mark.green@liverpool.ac.uk</a></p>
 
@@ -217,7 +363,6 @@ University of Liverpool<br />
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -228,42 +373,60 @@ University of Liverpool<br />
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["Spatial Data.pdf", "Spatial Data.epub"],
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Spatial Data.pdf", "Spatial Data.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

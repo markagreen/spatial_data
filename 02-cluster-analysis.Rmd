@@ -93,120 +93,6 @@ map3
 
 The resulting map is similar to the hexmap earlier, but we now have one contiguous and single surface for the data. It is worth playing about with the number of neighbours to examine how the algorithm changes the resulting map. Sometimes these are called 'heatmaps'.
 
-### Spatial interpolation
-
-Sometimes the point data that we have contain values or variables that tell us information about them. Here we might be interested in values themselves, rather than the clustering of their locations. We therefore need a different approach here.
-
-To demonstrate how to visualise and extract some value here, we will use a new dataset. The data can be found [here](https://qof.digital.nhs.uk/) and are open data. I have done some additional cleaning on the data and extracted their spatial locations to save us time. There is active debate over how useful these data are, but they provide a helpful case study. The variables in the dataset are:
-
-* pcn_code - unique code for the primary care network (groups of GP practices/surgeries)
-* pcn_name - name for primary care network
-* gp_code - unique code for GP surgery
-* gp_name - name of GP surgery
-* chronic_heart_disease_percent - estimated percentage of people at the surgery who have chronic heart disease
-* obese_percent - estimated percentage of people who are defined as obese
-* postcode - postcode for GP surgery
-* longitude - longitude location
-* latitude - latitude location
-
-Let's load in these data.
-
-```{r}
-# Load data
-gp_locations <- read.csv("./Data/gp_qof_1920.csv", fileEncoding = "UTF-8-BOM")
-
-# Convert to spatial points data frame
-gp_locations_sp <- gp_locations %>% # For object
-  st_as_sf(coords = c("longitude", "latitude")) %>% # Define as spatial object and identify which columns tell us the position of points
-  st_set_crs(4326) # Set CRS
-
-```
-
-There are numerous ways that we might plot or visualise these data. First, we could simply assign colours to each point based on their values. We will explore this using the data on percentage of registered patients who are obese.
-
-```{r}
-map4 <- ggplot() + # Call ggplot2
-  geom_sf(data = liverpool) + # Plot Liverpool outline
-  geom_sf(data = gp_locations_sp, aes(color = obese_percent), size = 2) + # Define what to map (adjusted size to make easier to see)
-  scale_color_viridis() + # Make colour blind friendly
-  xlab("Longitude") + # Add x-axis label
-  ylab("Latitude") + # Add y-axis label
-  labs(title = "Percentage of patients who are obese", # Edit plot title 
-       color = "Obesity (%)") # Edit legend title (note must match color as that is what we are plotting)
-map4
-
-```
-
-This is a little hard to see general patterns, but follows what we learnt last week.
-
-A second approach would be to adjust the size of the dots in relation to their value.
-
-```{r}
-map5 <- ggplot() + # Call ggplot2
-  geom_sf(data = liverpool) + # Plot Liverpool outline
-  geom_sf(data = gp_locations_sp, aes(size = obese_percent),) + # Define what to map
-  scale_color_viridis() + # Make colour blind friendly
-  xlab("Longitude") + # Add x-axis label
-  ylab("Latitude") + # Add y-axis label
-  labs(title = "Percentage of patients who are obese", # Edit plot title 
-       size = "Obesity (%)") # Edit legend title (note must match size as that is what we are plotting)
-map5
-
-```
-
-Adjusting the size of points can be visually more striking, but is also harder to interpret the exact values. It is easier for the human mind to judge differences in colour rather than differences in sizes of points. Try identifying locations that are grouped as 15 or 20 on the map - it's hard!
-
-Since our maps only present data for the spatial points themselves, we may want to estimate what the data might be like inbetween points to help identify the area extent of clusters or general spatial patterns. Here, we would turn to **spatial interpolation** techniques that can create a continuous surface based on given point values. 
-
-There are various spatial interpolation techniques that we can then use to fill in the gaps including inverse distance weighting or spatial kriging techniques. In this tutorial, we will just use non-linear **splines** to estimate values inbetween points. Splines are faster to run, but may give less precise results. 
-
-The following code below runs the interpolation code and then sorts the data out to a format for mapping. We need a couple of new packages here - `akima` and `reshape2` - although, we will only use them briefly so I will not describe them in detail.
-
-```{r}
-# Interpolate data
-library(akima) # Load package
-obese_interp <- with(gp_locations, interp(x = longitude, y = latitude, z = obese_percent, duplicate = "mean", linear = FALSE)) # Set parameters for spatial location, what to predict, how to deal with duplicate values (i.e., take the mean), and linear = FALSE means uses cubic splines
-
-# Data wrangling
-library(reshape2) # Load package
-pred_obese_df <- melt(obese_interp$z, na.rm = TRUE) # Convert predicted values from a list (in wide format) to data frame (in long format)
-names(pred_obese_df) <- c("x", "y", "obese_percent") # Rename columns
-
-# Sort out longitude values
-x <- melt(obese_interp$x, na.rm = TRUE) # Convert longitude values from list format to data frame
-x <- data.frame(row.names(x), x, row.names = NULL) # Save row values as column (these match up to melt values x)
-names(x) <- c("x", "longitude") # Rename columns
-pred_obese_df <- merge(pred_obese_df, x, by = "x", all.x = T) # Join on longitude values to their lookup values from the melt process
-rm(x) # Tidy
-
-# Sort out latitude values
-y <- melt(obese_interp$y, na.rm = TRUE) # Convert longitude values from list format to data frame
-y <- data.frame(row.names(y), y, row.names = NULL) # Save row values as column (these match up to melt values y)
-names(y) <- c("y", "latitude") # Rename columns
-pred_obese_df <- merge(pred_obese_df, y, by = "y", all.x = T) # Join on longitude values to their lookup values from the melt process
-rm(y) # Tidy
-
-```
-
-Phew, that code was rather messy but it does get the job done (if you know a better way, let me know!). We can now plot it using a heat map.
-
-```{r}
-map6 <- ggplot() + # Call ggplot2
-  geom_sf(data = liverpool) + # Plot Liverpool outline
-  geom_tile(data = pred_obese_df, aes(x = longitude, y = latitude, fill = obese_percent)) + # Define what to map (interpolated values)
-  scale_fill_viridis() + # Make colour blind friendly
-  xlab("Longitude") + # Add x-axis label
-  ylab("Latitude") + # Add y-axis label
-  labs(title = "Estimated obesity prevalence", # Edit plot title 
-       fill = "Obesity (%)") # Edit legend title (note must match fill as that is what we are plotting)
-map6
-
-```
-
-We should be careful in producing these maps, since we are estimating data inbetween points and the resulting maps may not be correct. For example, it makes an assumption that people go to their nearest GP surgery to where they live, which is not always true. We can see a cluster of high levels of obesity north of the city centre, which is a densely populated deprived area. However, there is a lot of variability in the data and it is a little messy. Hopefully at least it gives you can idea of how to use these techniques and what they can produce.
-
-Can you produce a similar map for chronic health disease prevalence? (tip: the variable required is `gp_locations$chronic_heart_disease_percent`).
-
 ## Area data
 
 These techniques introduced for point-based data do not work with area data. However, we can utilise more powerful techniques to examine the existence of clustering in our data. 
@@ -267,7 +153,7 @@ m1 # Print result
 
 ```
 
-There is a lot of output here, however we are really only interested in two things mostly. The Moran's I statistic is `r m1$estimate[1]`. We interpret the estimated value was running between -1 and 1, where values closer to 1 suggest existence of spatial clustering, values of 0 suggesting no clustering (i.e., random), and values less than 0 suggesting evenly dispersed values (rare in the real world). Some rules of thumbs - a value of 0.3 would suggest low-moderate clustering, with values 0.5+ suggestung moderate to high clustering. A value of `r m1$estimate[1]` suggests little evidence of clustering in the data.
+There is a lot of output here, however we are really only interested in two things mostly. The Moran's I statistic is `r m1$estimate[1]`. We interpret the estimated value was running between -1 and 1, where values closer to 1 suggest existence of spatial clustering, values of 0 suggesting no clustering (i.e., random), and values less than 0 suggesting evenly dispersed values (rare in the real world). Some rules of thumbs - a value of 0.3 would suggest low-moderate clustering, with values 0.5+ suggesting moderate to high clustering. A value of `r m1$estimate[1]` suggests little evidence of clustering in the data.
 
 We can also consider the p-value to assess if the result is statistically significant ~~notwithstanding the continued controversy on using p-values~~. A value of `r m1$p.value` suggests that the result is not statistically significant, lending further evidence towards a conclusion that there is little evidence of spatial clustering. 
 

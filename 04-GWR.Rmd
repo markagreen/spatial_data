@@ -266,33 +266,6 @@ map7 # Print plot
 
 Why not have a look at other coefficients now - what can you find out? What interesting spatial patterns are there?
 
-## Scaling GWR for large datasets
-
-GWR models are computationally intensive to fit and therefore do not scale well with larger datasets (even those with 10000+ observations can be demanding). Some clever cookies have adapted the methodology to estimate the model quicker when dealing with larger or more complex datasets, including creating the R package `scgwr` (SCalable GWR) to implement the method in R. You can read more about the methodology [here](https://www.tandfonline.com/doi/full/10.1080/24694452.2020.1774350).
-
-The actual code is not too difficult to use, but may require some refinement to model parameters. Specifically, we may want to play about with:
-
-* `knn` - Number of nearest-neighbours selected during estimation: larger is better for bigger datasets.
-* `nsamp` - Number of random samples for (aproximate) cross-validation: should be smaller than sample size, but larger is better for minimising errors due to random sampling. 
-
-Let's re-run the model again, but using the `scgwr` package. Unfortunately, this code does not work with our example so I leave it in here to show the option for you in case you ever need it. If you can fix it, please send in your answers on a postcode.
-
-```{r}
-# # Library
-# library(scgwr)
-# 
-# # Tidy data
-# outcome <- lad_eng[, "percent_second_dose"] # Store outcome variable (if don't define as object then stores as list)
-# xvars <- lad_eng[, c("median_age", "Other_White", "Mixed", "Black", "Asian", "Other", "mean_imd_score", "pop_density")] # Store explanatory variables
-# xy <- lad_eng[, c("long", "lat")] # Store co-ordinates
-# 
-# # Model
-# model3 <- scgwr(y = outcome, x = xvars, coords = xy, knn = 100, kernel = "gau", p = 4, approach = "CV") # Model using cross-validation approach ("CV") and Gaussian kernel ("gau")
-
-```
-
-The R package can incorporate parallel processing for faster processing as well using the `scgwr_p` command. 
-
 ## Summary
 
 In this practical session, we have explored how use Geographically Weighted Regression and explored the opportunities that it can bring for exploring spatially varying contexts.
