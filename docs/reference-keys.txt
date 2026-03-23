@@ -1,4 +1,4 @@
-whymap
+intro
 why-map
 mapping-in-r
 areas
@@ -37,3 +37,4 @@ summary-3
 learning-outcomes-1
 further-learning
 thank-you
+whymap
